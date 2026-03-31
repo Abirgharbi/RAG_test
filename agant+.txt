@@ -1,0 +1,32 @@
+Ce que l’agent apporte concrètement (3 bénéfices business)
+1) Gain de temps
+
+Au lieu d’analyser manuellement 10 fichiers JSON + stats, l’agent :
+
+lit les outputs
+détecte anomalies
+propose actions correctives
+
+➡️ tu gagnes des heures.
+
+2) Réduction des erreurs
+
+L’agent te permet de détecter :
+
+metadata vide (board/component)
+chunking trop long
+biais sur severity/layer
+incohérences docs_v2 vs docs_v2_sim
+
+➡️ pipeline plus fiable.
+
+3) Documentation automatique
+
+Il génère :
+
+schema JSON clair
+explication des champs
+résumé de workflow
+recommandations chunking
+
+➡️ utile pour ST (transfert projet).
