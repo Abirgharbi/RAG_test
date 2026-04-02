@@ -1,1 +1,17 @@
-src/.env
+# Python env
+rag_env/
+venv/
+.env/
+
+# Cache
+__pycache__/
+*.pyc
+
+# RAG / embeddings
+chroma_db/
+*.sqlite3
+*.pkl
+*.bin
+
+# Logs
+*.log
