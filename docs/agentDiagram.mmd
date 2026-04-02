@@ -1,0 +1,43 @@
+flowchart TD
+
+A["Résultats scripts tests<br/>stats, TF-IDF, JSON schemas"]
+
+subgraph AgentLayer["VS Code Agent Layer"]
+B["Agent VS Code Copilot"]
+
+C["Skill: analyzestats"]
+D["Skill:<br/>document_json_schema"]
+E["Skill: chunking_strategies"]
+
+F["Interprétation distributions<br/>layer/component/severity"]
+G["Documentation schémas JSON<br/>docs_v2 + chunks_v2"]
+H["Recommandations chunking<br/>taille optimale / split"]
+end
+
+A --> B
+
+B --> C
+B --> D
+B --> E
+
+C --> F
+D --> G
+E --> H
+
+%% COLOR LOGIC
+
+%% Entrée (data)
+style A fill:#BBDEFB,stroke:#1E88E5,stroke-width:2px
+
+%% Agent (cerveau)
+style B fill:#E1BEE7,stroke:#8E24AA,stroke-width:2px
+
+%% Skills (traitement)
+style C fill:#FFE0B2,stroke:#FB8C00,stroke-width:2px
+style D fill:#FFE0B2,stroke:#FB8C00,stroke-width:2px
+style E fill:#FFE0B2,stroke:#FB8C00,stroke-width:2px
+
+%% Outputs (résultats)
+style F fill:#C8E6C9,stroke:#43A047,stroke-width:2px
+style G fill:#C8E6C9,stroke:#43A047,stroke-width:2px
+style H fill:#C8E6C9,stroke:#43A047,stroke-width:2px
