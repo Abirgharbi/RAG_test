@@ -1,40 +1,32 @@
----
-config:
-  layout: fixed
-  theme: redux
----
-flowchart TB
-    A["Sources<br>GitHub Issues API + STM32Cube repos"] --> C["① ingestion/fetch_files.py"] & B["① ingestion/fetch_issues.py"]
-    B --> B_out["data/raw_issues.json"]
-    C --> C_out["data/raw_files.json"]
-    B_out --> D["② cleaning/clean_issues.py"]
-    D --> D_out["data/clean_issues.json"]
-    C_out --> E["② cleaning/clean_files.py"]
-    E --> E_out["data/clean_files.json"]
-    D_out --> F["③ enrichment/issues_to_docs_v2.py"]
-    F --> F_out["data/docs_issues_v2.json"]
-    E_out --> G["③ enrichment/files_to_docs_v2.py"]
-    G --> G_out["data/docs_files_v2.json"]
-    F_out --> H["④ similarity/compute_issue_similarity_v2.py"]
-    H --> H_out["data/docs_issues_v2_sim.json"]
-    H_out --> I["⑤ chunking/docs_to_chunks_issues_v2.py"]
-    I --> I_out["data/chunks_issues_v2.json"]
-    G_out --> J["⑤ chunking/docs_to_chunks_files_v2.py"]
-    J --> J_out["data/chunks_files_v2.json"]
-    J_out --> K["⑥ evaluation (stats / TF-IDF / heuristics)"]
-    K --> L["⑦ Delivery 
-    datasets/ (RAG-ready)"]
-    I_out --> K
+flowchart TD
 
-    style A fill:#BBDEFB
-    style C fill:#FFF9C4
-    style B fill:#FFF9C4
-    style D fill:#FFF9C4
-    style E fill:#FFF9C4
-    style F fill:#FFF9C4
-    style G fill:#FFF9C4
-    style H fill:#FFF9C4
-    style I fill:#FFF9C4
-    style J fill:#FFF9C4
-    style K fill:#FFF9C4
-    style L fill:#FFF9C4
+    A["Sources<br/>GitHub Issues API + STM32Cube repos"]
+
+    %% LEFT PIPELINE (ISSUES)
+    A --> B1["① ingestion/fetch_issues.py"]
+    B1 --> C1["data/raw_issues.json"]
+    C1 --> D1["② cleaning/clean_issues.py"]
+    D1 --> E1["data/clean_issues.json"]
+    E1 --> F1["③ enrichment/issues_to_docs_v2.py"]
+    F1 --> G1["data/docs_issues_v2.json"]
+    G1 --> H1["④ similarity/compute_issue_similarity_v2.py"]
+    H1 --> I1["data/docs_issues_v2_sim.json"]
+    I1 --> J1["⑤ chunking/docs_to_chunks_issues_v2.py"]
+    J1 --> K1["data/chunks_issues_v2.json"]
+
+    %% RIGHT PIPELINE (FILES)
+    A --> B2["① ingestion/fetch_files.py"]
+    B2 --> C2["data/raw_files.json"]
+    C2 --> D2["② cleaning/clean_files.py"]
+    D2 --> E2["data/clean_files.json"]
+    E2 --> F2["③ enrichment/files_to_docs_v2.py"]
+    F2 --> G2["data/docs_files_v2.json"]
+    G2 --> H2["⑤ chunking/docs_to_chunks_files_v2.py"]
+    H2 --> I2["data/chunks_files_v2.json"]
+
+    %% MERGE
+    K1 --> L["⑥ evaluation<br/>stats / TF-IDF / heuristics"]
+    I2 --> L
+
+    %% DELIVERY
+    L --> M["⑦ Delivery<br/>datasets (RAG-ready)"]
